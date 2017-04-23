@@ -5,7 +5,7 @@ Check these first:<br>
 <a href="">Presentation</a><br>
 <a href="">Report</a>
 
-Prerequisites:
+Prerequisites:<br>
 You need to have the following installed:<br>
 python3.6<br>
 Spark<br>

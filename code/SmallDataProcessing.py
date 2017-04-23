@@ -11,22 +11,18 @@ from pandas import Series, DataFrame
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
 # In[107]:
 
 from scipy import stats, integrate
-
 
 # In[2]:
 
 from sklearn.preprocessing import Imputer
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
-
 # In[5]:
 
 # np.set_printoptions(threshold=np.nan)
-
 
 # ### Step1: Collect train data a d lable data
 
@@ -38,7 +34,6 @@ def getTrainData(path):
     traindata = train_file.map(lambda line: line.split("\t")).collect()
     X_df = pd.DataFrame(traindata)
     return X_df
-
 
 # In[16]:
 
@@ -55,14 +50,9 @@ def getLableData(path):
 X_df = getTrainData('dataset/orange_small_train.data')
 y_df = getLableData('dataset/orange_small_train_churn.labels.txt')
 
-
 # In[12]:
 
-X_df.head(10)
-
-
 # ### Step2: Processing Missing Data
-
 # * 2.1 dealing with String Empty Data
 
 # In[34]:
@@ -75,16 +65,11 @@ def processEmpty(X_df):
     X_df3 = X_df2.apply(lambda x: x.str.strip()).replace('', np.nan)
     return X_df3
 
-
 # In[35]:
 
 X_df3 = processEmpty(X_df)
 
-
 # In[37]:
-
-X_df3.head()
-
 
 # * 2.2 dealing with Numerical Missing Data
 
@@ -109,17 +94,12 @@ def ProcessMissNum(X_df3):
 X_num = ProcessMissNum(X_df3)
 
 
-# In[253]:
-
-pd.DataFrame(X_num).head()
-
 
 # * 2.3 Encoding categorical data
 
 # In[64]:
 
 from ipykernel import kernelapp as app
-
 
 # In[58]:
 
@@ -141,18 +121,12 @@ for col in cols:
 X_cat_df2[cols] = X_cat_df2[cols].apply(lambda x: x.cat.codes)
 
 
-# In[256]:
-
-X_cat_df2.head()
-
-
 # * 2.4 Combine the numerical data and categorical data.
 
 # In[60]:
 
 # Comnime the numerical columns and categorical columns
 X_df_combine = pd.concat([pd.DataFrame(X_num), pd.DataFrame(np.array(X_cat_df2))], axis=1)
-
 
 # In[70]:
 
@@ -161,16 +135,12 @@ X = X_df_combine.iloc[:, :].values
 
 # In[61]:
 
-X_df_combine.head()
-
-
 # * 2.5 Lable Encoding
 
 # In[66]:
 
 # deal with the lable y train data 
 from sklearn.preprocessing import LabelEncoder
-
 
 # In[67]:
 
@@ -193,7 +163,6 @@ y_train = encodeLable(y_df)
 # Feature Scaling
 from sklearn.preprocessing import StandardScaler
 
-
 # In[86]:
 
 def featureScal(X):
@@ -203,100 +172,13 @@ def featureScal(X):
 X_std = featureScal(X)
 
 
-# In[87]:
-
-X_std
-
-
 # In[240]:
-
-pd.DataFrame(X_std).head()
-
-
 # In[35]:
-
-# Export to csv
-pd.DataFrame(X_std).to_csv('X_train.csv')
-
-
-# In[29]:
-
-# Export to csv
-pd.DataFrame(y_train).to_csv('y_train_label.csv')
 
 
 # ### Step4: PCA
 
-# In[97]:
-
-def pcaPlot(X_std):
-    # 1 - Eigendecomposition - Computing Eigenvectors and Eigenvalues
-    # Covariance Matrix
-    mean_vec = np.mean(X_std, axis=0)
-    cov_mat = (X_std - mean_vec).T.dot((X_std - mean_vec)) / (X_std.shape[0]-1)
-    # 2.
-    cov_mat = np.cov(X_std.T)
-    eig_vals, eig_vecs = np.linalg.eig(cov_mat)
-    #3 sort
-    tot = sum(eig_vals)
-    var_exp = [(i / tot)*100 for i in sorted(eig_vals, reverse=True)]
-    cum_var_exp = np.cumsum(var_exp)
-    # plot explained variance ratio
-    return var_exp,cum_var_exp
-
-
-# In[101]:
-
-def plotCEV(var_exp,cum_var_exp,n):
-    with plt.style.context('seaborn-whitegrid'):
-        plt.figure(figsize=(6, 4))
-
-        plt.bar(range(n), var_exp, alpha=0.5, align='center',
-            label='individual explained variance')
-        plt.step(range(n), cum_var_exp, where='mid',
-             label='cumulative explained variance')
-        plt.ylabel('Explained variance ratio')
-        plt.xlabel('Principal components')
-        plt.legend(loc='best')
-        plt.tight_layout()
-        plt.show()
-
-
-# In[98]:
-
-var_exp,cum_var_exp = pcaPlot(X_std)
-
-
-# In[100]:
-
-plotCEV(var_exp,cum_var_exp,212)
-
-
-# In[95]:
-
-with plt.style.context('seaborn-whitegrid'):
-    plt.figure(figsize=(6, 4))
-
-    plt.bar(range(212), var_exp, alpha=0.5, align='center',
-            label='individual explained variance')
-#     plt.step(range(212), cum_var_exp, where='mid',
-#              label='cumulative explained variance')
-    plt.ylabel('Explained variance ratio')
-    plt.xlabel('Principal components')
-    plt.legend(loc='best')
-    plt.tight_layout()
-    plt.show()
-
-
-# In[ ]:
-
-# Correlation Matrix
-
-
-# In[89]:
-
 from sklearn.decomposition import PCA
-
 
 # In[262]:
 
@@ -312,6 +194,82 @@ def DimReduce(X_std, n):
 
 X_Train = DimReduce(X_std, 150)
 
+# Export to csv
+pd.DataFrame(X_std).to_csv('dataset/X_train.csv')
+
+# In[ ]:
+
+# Export to csv
+pd.DataFrame(y_train).to_csv('dataset/y_train_label.csv')
+
+
+# In[97]:
+
+# def pcaPlot(X_std):
+#     # 1 - Eigendecomposition - Computing Eigenvectors and Eigenvalues
+#     # Covariance Matrix
+#     mean_vec = np.mean(X_std, axis=0)
+#     cov_mat = (X_std - mean_vec).T.dot((X_std - mean_vec)) / (X_std.shape[0]-1)
+#     # 2.
+#     cov_mat = np.cov(X_std.T)
+#     eig_vals, eig_vecs = np.linalg.eig(cov_mat)
+#     #3 sort
+#     tot = sum(eig_vals)
+#     var_exp = [(i / tot)*100 for i in sorted(eig_vals, reverse=True)]
+#     cum_var_exp = np.cumsum(var_exp)
+#     # plot explained variance ratio
+#     return var_exp,cum_var_exp
+
+
+# In[101]:
+
+# def plotCEV(var_exp,cum_var_exp,n):
+#     with plt.style.context('seaborn-whitegrid'):
+#         plt.figure(figsize=(6, 4))
+
+#         plt.bar(range(n), var_exp, alpha=0.5, align='center',
+#             label='individual explained variance')
+#         plt.step(range(n), cum_var_exp, where='mid',
+#              label='cumulative explained variance')
+#         plt.ylabel('Explained variance ratio')
+#         plt.xlabel('Principal components')
+#         plt.legend(loc='best')
+#         plt.tight_layout()
+#         plt.show()
+
+# In[98]:
+
+# var_exp,cum_var_exp = pcaPlot(X_std)
+
+
+# # In[100]:
+
+# plotCEV(var_exp,cum_var_exp,212)
+
+
+# In[95]:
+
+# with plt.style.context('seaborn-whitegrid'):
+#     plt.figure(figsize=(6, 4))
+
+#     plt.bar(range(212), var_exp, alpha=0.5, align='center',
+#             label='individual explained variance')
+# #     plt.step(range(212), cum_var_exp, where='mid',
+# #              label='cumulative explained variance')
+#     plt.ylabel('Explained variance ratio')
+#     plt.xlabel('Principal components')
+#     plt.legend(loc='best')
+#     plt.tight_layout()
+#     plt.show()
+
+
+# In[ ]:
+
+# Correlation Matrix
+
+
+# In[89]:
+
 
 # In[ ]:
 
@@ -321,15 +279,6 @@ X_Train = DimReduce(X_std, 150)
 # ### Small dataset export
 
 # In[ ]:
-
-# Export to csv
-pd.DataFrame(X_std).to_csv('X_train.csv')
-
-
-# In[ ]:
-
-# Export to csv
-pd.DataFrame(y_train).to_csv('y_train_label.csv')
 
 
 # In[102]:

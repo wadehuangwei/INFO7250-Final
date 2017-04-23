@@ -1,10 +1,12 @@
 # INFO7250-Final
 Final Project of Engineering Big-Data Systems
 
-<a href="">Presentation for this project</a>
+Check these first:<br>
+<a href="">Presentation</a><br>
+<a href="">Report</a>
 
 Prerequisites:
-You need to have python3.6 installed. And the following python libraries are needed:
+You need to have python3.6 installed. And the following python libraries are needed:<br>
 Theano, Tensorflow, Keras
 
 To run:
@@ -18,12 +20,18 @@ To run:
 $ cd path/to/INFO7250-Final/code
 ```
 
-4. Run on small dataset. Check the output in terminal.
+4. Data preprocessing, run SmallDataProcessing.py and LargeDataProcessing.py
+```sh
+$ python SmallDataProcessing.py
+$ python LargeDataProcessing.py
+```
+
+5. Run ANN on small dataset. Check the output in terminal.
 ```sh
 $ python ann_s.py
 ```
 
-5. Run on large dataset. Check the output in terminal.
+6. Run ANN on large dataset. Check the output in terminal.
 ```sh
 $ python ann_l.py
 ```

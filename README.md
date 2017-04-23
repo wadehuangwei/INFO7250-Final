@@ -6,7 +6,10 @@ Check these first:<br>
 <a href="">Report</a>
 
 Prerequisites:
-You need to have python3.6 installed. And the following python libraries are needed:<br>
+You need to have the following installed:<br>
+python3.6<br>
+Spark<br>
+The following python libraries are needed:<br>
 Theano, Tensorflow, Keras
 
 To run:

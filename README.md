@@ -24,11 +24,7 @@ To run:
 $ cd path/to/INFO7250-Final/code
 ```
 
-4. Data preprocessing, run SmallDataProcessing.py and LargeDataProcessing.py
-```sh
-$ python SmallDataProcessing.py
-$ python LargeDataProcessing.py
-```
+4. Data preprocessing. In jupyter, run "large data processing.ipynb" and "small data processing.ipynb"
 
 5. Run ANN on small dataset. Check the output in terminal.
 ```sh

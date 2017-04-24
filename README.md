@@ -2,8 +2,8 @@
 Final Project of Engineering Big-Data Systems
 
 Check these first:<br>
-<a href="">Presentation</a><br>
-<a href="">Report</a>
+<a href="https://github.com/wadehuangwei/INFO7250-Final/blob/master/7250Final.pptx">Presentation</a><br>
+<a href="https://github.com/wadehuangwei/INFO7250-Final/blob/master/Report.docx">Report</a>
 
 Prerequisites:<br>
 You need to have the following installed:<br>

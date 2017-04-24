@@ -7,8 +7,9 @@ Check these first:<br>
 
 Prerequisites:<br>
 You need to have the following installed:<br>
-python3.6<br>
-Spark<br>
+python3<br>
+Jupyter4.2.3<br>
+Spark2.1, should be configured to be driven by jupyter. <a href="https://medium.com/@GalarnykMichael/install-spark-on-mac-pyspark-453f395f240b">Configuration guide</a><br>
 The following python libraries are needed:<br>
 Theano, Tensorflow, Keras
 
